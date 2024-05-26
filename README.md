@@ -1,8 +1,8 @@
 Stick
 =====
 
-[![CircleCI](https://circleci.com/gh/tyler-sommer/stick/tree/main.svg?style=shield)](https://circleci.com/gh/tyler-sommer/stick/tree/main)
-[![GoDoc](https://godoc.org/github.com/tyler-sommer/stick?status.svg)](https://godoc.org/github.com/tyler-sommer/stick)
+[![CircleCI](https://circleci.com/gh/monstrum/stick/tree/main.svg?style=shield)](https://circleci.com/gh/monstrum/stick/tree/main)
+[![GoDoc](https://godoc.org/github.com/monstrum/stick?status.svg)](https://godoc.org/github.com/monstrum/stick)
 
 A Go language port of the [Twig](http://twig.sensiolabs.org/) templating engine. 
 
@@ -13,13 +13,13 @@ Overview
 This project is split across two parts.
 
 Package
-[`github.com/tyler-sommer/stick`](https://github.com/tyler-sommer/stick)
+[`github.com/monstrum/stick`](https://github.com/monstrum/stick)
 is a Twig template parser and executor. It provides the core
 functionality and offers many of the same extension points as Twig like
 functions, filters, node visitors, etc.
 
 Package
-[`github.com/tyler-sommer/stick/twig`](https://github.com/tyler-sommer/stick/tree/master/twig)
+[`github.com/monstrum/stick/twig`](https://github.com/monstrum/stick/tree/master/twig)
 contains extensions to provide the most Twig-like experience for
 template writers. It aims to feature the same functions, filters, etc.
 to be closely Twig-compatible.
@@ -51,7 +51,7 @@ Installation
 Stick is intended to be used as a library. The recommended way to install the library is using `go get`.
 
 ```bash
-go get -u github.com/tyler-sommer/stick
+go get -u github.com/monstrum/stick
 ```
 
 
@@ -67,7 +67,7 @@ import (
 	"log"
 	"os"
     
-	"github.com/tyler-sommer/stick"
+	"github.com/monstrum/stick"
 )
 
 func main() {
@@ -78,13 +78,13 @@ func main() {
 }
 ```
 
-See [godoc for more information](https://pkg.go.dev/github.com/tyler-sommer/stick).
+See [godoc for more information](https://pkg.go.dev/github.com/monstrum/stick).
 
 
 To do
 -----
 
-- [x] Autoescaping (see: [Twig compatibility](https://github.com/tyler-sommer/stick/blob/master/twig))
+- [x] Autoescaping (see: [Twig compatibility](https://github.com/monstrum/stick/blob/master/twig))
 - [ ] Whitespace control
 - [ ] Improve error reporting
 
@@ -92,4 +92,4 @@ To do
 - [ ] Improve test coverage (especially error cases)
 - [ ] Custom operators and tags
 - [ ] Sandbox
-- [ ] Generate [native Go code from a given parser tree](https://github.com/tyler-sommer/go-stickgen)
+- [ ] Generate [native Go code from a given parser tree](https://github.com/monstrum/go-stickgen)

@@ -7,7 +7,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/tyler-sommer/stick/parse"
+	"github.com/monstrum/stick/parse"
 )
 
 // A testValidator checks that the result of a test execution is as expected.

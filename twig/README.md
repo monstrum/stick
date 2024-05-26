@@ -1,8 +1,8 @@
 Twig
 ====
 
-[![CircleCI](https://circleci.com/gh/tyler-sommer/stick/tree/main.svg?style=shield)](https://circleci.com/gh/tyler-sommer/stick/tree/main)
-[![GoDoc](https://godoc.org/github.com/tyler-sommer/stick/twig?status.svg)](https://godoc.org/github.com/tyler-sommer/stick/twig)
+[![CircleCI](https://circleci.com/gh/monstrum/stick/tree/main.svg?style=shield)](https://circleci.com/gh/monstrum/stick/tree/main)
+[![GoDoc](https://godoc.org/github.com/monstrum/stick/twig?status.svg)](https://godoc.org/github.com/monstrum/stick/twig)
 
 Provides [Twig-compatibility](http://twig.sensiolabs.org/) for the stick
 templating engine.
@@ -18,13 +18,13 @@ This is the Twig compatibility subpackage for Stick.
 ##### In development
 
 Package
-[`github.com/tyler-sommer/stick/twig`](https://github.com/tyler-sommer/stick/tree/master/twig)
+[`github.com/monstrum/stick/twig`](https://github.com/monstrum/stick/tree/master/twig)
 contains extensions to provide the most Twig-like experience for
 template writers. It aims to feature the same functions, filters, etc.
 to be closely Twig-compatible.
 
 Package
-[`github.com/tyler-sommer/stick`](https://github.com/tyler-sommer/stick)
+[`github.com/monstrum/stick`](https://github.com/monstrum/stick)
 is a Twig template parser and executor. It provides the core
 functionality and offers many of the same extension points as Twig like
 functions, filters, node visitors, etc.
@@ -37,7 +37,7 @@ The `twig` package is intended to be used as a library. The recommended
 way to install the library is using `go get`.
 
 ```bash
-go get -u github.com/tyler-sommer/stick/twig
+go get -u github.com/monstrum/stick/twig
 ```
 
 
@@ -53,8 +53,8 @@ import (
 	"log"
 	"os"
 	
-	"github.com/tyler-sommer/stick"
-	"github.com/tyler-sommer/stick/twig"
+	"github.com/monstrum/stick"
+	"github.com/monstrum/stick/twig"
 )
 
 func main() {
@@ -65,5 +65,5 @@ func main() {
 }
 ```
 
-See [godoc for more information](https://pkg.go.dev/github.com/tyler-sommer/stick/twig).
+See [godoc for more information](https://pkg.go.dev/github.com/monstrum/stick/twig).
 

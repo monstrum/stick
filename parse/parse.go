@@ -1,6 +1,6 @@
 // Package parse handles transforming Stick source code
 // into AST for further processing.
-package parse // import "github.com/tyler-sommer/stick/parse"
+package parse // import "github.com/monstrum/stick/parse"
 
 import (
 	"bytes"

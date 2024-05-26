@@ -21,14 +21,14 @@
 //	// Substitute os.Stdout with any io.Writer.
 //	env.Execute("Hello, {{ name }}!", os.Stdout, p)
 //
-// Check the main package https://pkg.go.dev/github.com/tyler-sommer/stick for
+// Check the main package https://pkg.go.dev/github.com/monstrum/stick for
 // more information on general functionality and usage.
-package twig // import "github.com/tyler-sommer/stick/twig"
+package twig // import "github.com/monstrum/stick/twig"
 
 import (
-	"github.com/tyler-sommer/stick"
-	"github.com/tyler-sommer/stick/parse"
-	"github.com/tyler-sommer/stick/twig/filter"
+	"github.com/monstrum/stick"
+	"github.com/monstrum/stick/parse"
+	"github.com/monstrum/stick/twig/filter"
 )
 
 // New creates a new, default Env that aims to be compatible with Twig.
