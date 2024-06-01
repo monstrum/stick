@@ -389,8 +389,11 @@ func filterMerge(ctx stick.Context, val stick.Value, args ...stick.Value) stick.
 }
 
 func filterNL2BR(ctx stick.Context, val stick.Value, args ...stick.Value) stick.Value {
-	// TODO: Implement Me
-	return val
+	content, ok := val.(string)
+	if !ok {
+		return val
+	}
+	return stick.Value(strings.Replace(content, "\n", "<br>", -1))
 }
 
 func filterNumberFormat(ctx stick.Context, val stick.Value, args ...stick.Value) stick.Value {
