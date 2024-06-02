@@ -27,7 +27,9 @@ func filterFormatCurrencyFn(locale string) stick.Filter {
 		case string:
 			amount, err = currency.NewAmount(v, currencyCode)
 		case int64:
-			amount, err = currency.NewAmountFromInt64(v, currencyCode)
+		case int32:
+		case int:
+			amount, err = currency.NewAmountFromInt64(int64(v), currencyCode)
 		case big.Int:
 			amount, err = currency.NewAmountFromBigInt(&v, currencyCode)
 		}

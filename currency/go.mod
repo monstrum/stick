@@ -4,7 +4,7 @@ go 1.21.3
 
 require (
 	github.com/bojanz/currency v1.2.3
-	github.com/monstrum/stick v1.1.1-0.20240602095939-82ec53322714
+	github.com/monstrum/stick v1.1.1-0.20240602100544-6fc23a2f80ea
 )
 
 require (
