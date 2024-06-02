@@ -3,7 +3,6 @@ package parse
 import (
 	"fmt"
 	"io"
-	"io/ioutil"
 	"strings"
 	"unicode"
 )
@@ -139,7 +138,7 @@ func (l *lexer) tokenize() {
 // newLexer creates a lexer, ready to begin tokenizing.
 func newLexer(input io.Reader) *lexer {
 	// TODO: lexer should use the reader.
-	i, _ := ioutil.ReadAll(input)
+	i, _ := io.ReadAll(input)
 	return &lexer{0, 0, 1, 0, string(i), make(chan token), nil, modeNormal, token{}, 0}
 }
 
