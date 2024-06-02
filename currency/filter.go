@@ -7,6 +7,12 @@ import (
 	"math/big"
 )
 
+// AddFormatCurrencyFilter adds a format_currency filter to the filters map.
+// this filter doesn't have full support for all the options of the PHP version.
+// The locale is used to determine the currency symbol and format.
+// The currency code is used to determine the currency symbol.
+// The currency code is optional and defaults to EUR.
+// The value can be a string, int, int32, int64, or big.Int.
 func AddFormatCurrencyFilter(locale string) factory.AppendFilterFn {
 	return func(filters map[string]stick.Filter) {
 		filters["format_currency"] = filterFormatCurrencyFn(locale)
