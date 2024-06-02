@@ -259,8 +259,16 @@ func filterFirst(ctx stick.Context, val stick.Value, args ...stick.Value) stick.
 }
 
 func filterFormat(ctx stick.Context, val stick.Value, args ...stick.Value) stick.Value {
-	// TODO: Implement Me
-	return val
+	text, ok := val.(string)
+	if !ok {
+		return val
+	}
+
+	a := make([]interface{}, len(args))
+	for i, v := range args {
+		a[i] = v
+	}
+	return fmt.Sprintf(text, a...)
 }
 
 func filterJoin(ctx stick.Context, val stick.Value, args ...stick.Value) stick.Value {
