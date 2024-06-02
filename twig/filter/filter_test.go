@@ -140,27 +140,29 @@ func TestFilters(t *testing.T) {
 		}, "<p>test</p>"},
 	}
 	for _, test := range tests {
-		matches := false
-		res := test.actual()
-		expected := test.expected
-		if fn, ok := expected.(func(actual stick.Value) (string, bool)); ok {
-			if expected, ok = fn(res); ok {
-				matches = true
-			}
-		} else {
-			res = test.actual()
-			if res != expected {
-				if v := fmt.Sprintf("%v", res); v == expected {
-					// the Go representation of the value matches expected
+		t.Run(test.name, func(t *testing.T) {
+			matches := false
+			res := test.actual()
+			expected := test.expected
+			if fn, ok := expected.(func(actual stick.Value) (string, bool)); ok {
+				if expected, ok = fn(res); ok {
 					matches = true
 				}
 			} else {
-				matches = true
+				res = test.actual()
+				if res != expected {
+					if v := fmt.Sprintf("%v", res); v == expected {
+						// the Go representation of the value matches expected
+						matches = true
+					}
+				} else {
+					matches = true
+				}
 			}
-		}
-		if !matches {
-			t.Errorf("%s:\n\texpected: %v\n\tgot: %v", test.name, expected, res)
-		}
+			if !matches {
+				t.Errorf("%s:\n\texpected: %v\n\tgot: %v", test.name, expected, res)
+			}
+		})
 	}
 }
 
