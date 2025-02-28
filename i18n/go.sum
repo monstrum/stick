@@ -1,4 +1,4 @@
-github.com/monstrum/stick v1.1.1-0.20240602100544-6fc23a2f80ea h1:d+V+G/dtMT7Uuc5yqKCx4dcEoBzEbRXclsKk5O/d6cw=
-github.com/monstrum/stick v1.1.1-0.20240602100544-6fc23a2f80ea/go.mod h1:AglG0ZQ+q+2uA8/Pw04TV9KgW7+icnCxnC579K6z1XM=
+github.com/monstrum/stick v1.3.0 h1:1pb3diqjMw7xaq+P7JZRvBsIv9YqIyHCmIcGBGwVjpY=
+github.com/monstrum/stick v1.3.0/go.mod h1:AglG0ZQ+q+2uA8/Pw04TV9KgW7+icnCxnC579K6z1XM=
 github.com/shopspring/decimal v1.4.0 h1:bxl37RwXBklmTi0C79JfXCEBD1cqqHt0bbgBAGFp81k=
 github.com/shopspring/decimal v1.4.0/go.mod h1:gawqmDU56v4yIKSwfBSFip1HdCCXN8/+DMd9qYNcwME=

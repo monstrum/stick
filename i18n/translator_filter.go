@@ -1,7 +1,6 @@
 package i18n
 
 import (
-	"context"
 	"github.com/monstrum/stick"
 )
 
@@ -41,6 +40,12 @@ func (f *TranslationFilter) Trans(ctx stick.Context, value stick.Value, args ...
 	if !ok {
 		return value
 	}
+
+	f.SetLocale("")
+	if lang, ok := ctx.Context().Value("locale").(string); ok && lang != "" {
+		f.SetLocale(Locale(lang))
+	}
+
 	arguments, locale, domain := f.parseTranslationFilterArguments(f.Translator, args...)
-	return stick.Value(f.Translator.Translate(context.Background(), message, arguments, locale, domain))
+	return stick.Value(f.Translator.Translate(ctx.Context(), message, arguments, locale, domain))
 }

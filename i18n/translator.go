@@ -3,7 +3,21 @@ package i18n
 import (
 	"context"
 	"strings"
+	"sync"
 )
+
+var translator *Translator
+
+func GetTranslator(opts ...OptionFn) *Translator {
+	if translator != nil {
+		return translator
+	}
+
+	sync.OnceFunc(func() {
+		translator = NewTranslator(opts...)
+	})()
+	return translator
+}
 
 func NewTranslator(opts ...OptionFn) *Translator {
 	o := &Option{}
@@ -20,8 +34,9 @@ func NewTranslator(opts ...OptionFn) *Translator {
 }
 
 type Translator struct {
-	Domain Domain
-	Locale Locale
+	Domain         Domain
+	Locale         Locale
+	SelectedLocale Locale
 
 	Translations       map[string]string
 	LocaleTranslations map[Locale]Translations
@@ -69,11 +84,20 @@ func (t *Translator) GetDomain(domain Domain) Domain {
 	return domain
 }
 
+func (t *Translator) SetLocale(locale Locale) {
+	t.SelectedLocale = locale
+}
+
 func (t *Translator) GetLocale(locale Locale) Locale {
-	if locale == "" {
-		return t.Locale
+	if locale != "" {
+		return locale
 	}
-	return locale
+
+	if t.SelectedLocale != "" {
+		return t.SelectedLocale
+	}
+
+	return t.Locale
 }
 
 func (t *Translator) Translate(
