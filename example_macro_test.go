@@ -1,6 +1,7 @@
 package stick_test
 
 import (
+	"context"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -29,7 +30,7 @@ func ExampleEnv_Execute_macro() {
 			{"why not", "cause"},
 		},
 	}
-	err := env.Execute("other.txt.twig", os.Stdout, params)
+	err := env.Execute(context.Background(), "other.txt.twig", os.Stdout, params)
 	if err != nil {
 		fmt.Println(err)
 	}

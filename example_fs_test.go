@@ -1,6 +1,7 @@
 package stick_test
 
 import (
+	"context"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -18,7 +19,7 @@ func ExampleEnv_Execute_filesystemLoader() {
 	env := stick.New(stick.NewFilesystemLoader(filepath.Join(d, "testdata")))
 
 	params := map[string]stick.Value{"name": "World"}
-	err := env.Execute("main.txt.twig", os.Stdout, params)
+	err := env.Execute(context.Background(), "main.txt.twig", os.Stdout, params)
 	if err != nil {
 		fmt.Println(err)
 	}

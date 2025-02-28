@@ -2,6 +2,7 @@ package stick // import "github.com/monstrum/stick"
 
 import (
 	"bytes"
+	"context"
 	"io"
 
 	"github.com/monstrum/stick/parse"
@@ -38,6 +39,7 @@ type Env struct {
 	Filters   map[string]Filter   // User-defined filters.
 	Tests     map[string]Test     // User-defined tests.
 	Visitors  []parse.NodeVisitor // User-defined node visitors.
+	Globals   map[string]Value    // Global values available to all templates.
 }
 
 // An Extension is used to group related functions, filters, visitors, etc.
@@ -76,8 +78,8 @@ type Context interface {
 	Meta() ContextMetadata // Runtime metadata about the template.
 	Scope() ContextScope   // All defined root-level names.
 	Env() *Env
-
-	noexport() // Prevent other packages from satisfying this interface.
+	Context() context.Context // The context.Context of the request.
+	noexport()                // Prevent other packages from satisfying this interface.
 }
 
 // New creates an empty Env.
@@ -92,6 +94,7 @@ func New(loader Loader) *Env {
 		Filters:   make(map[string]Filter),
 		Tests:     make(map[string]Test),
 		Visitors:  make([]parse.NodeVisitor, 0),
+		Globals:   make(map[string]Value),
 	}
 }
 
@@ -101,14 +104,14 @@ func (env *Env) Register(e Extension) error {
 }
 
 // Execute parses and executes the given template.
-func (env *Env) Execute(tpl string, out io.Writer, ctx map[string]Value) error {
-	return execute(tpl, out, ctx, env)
+func (env *Env) Execute(ctx context.Context, tpl string, out io.Writer, values map[string]Value) error {
+	return execute(ctx, tpl, out, values, env)
 }
 
 // ExecuteSafe executes the template but does not output anything if an error occurs.
-func (env *Env) ExecuteSafe(tpl string, out io.Writer, ctx map[string]Value) error {
+func (env *Env) ExecuteSafe(ctx context.Context, tpl string, out io.Writer, values map[string]Value) error {
 	buf := &bytes.Buffer{}
-	if err := env.Execute(tpl, buf, ctx); err != nil {
+	if err := env.Execute(ctx, tpl, buf, values); err != nil {
 		return err
 	}
 	_, err := io.Copy(out, buf)

@@ -2,6 +2,7 @@ package stick_test
 
 import (
 	"bytes"
+	"context"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -15,7 +16,7 @@ func ExampleEnv_Execute() {
 	env := stick.New(nil)
 
 	params := map[string]stick.Value{"name": "World"}
-	err := env.Execute(`Hello, {{ name }}!`, os.Stdout, params)
+	err := env.Execute(context.Background(), `Hello, {{ name }}!`, os.Stdout, params)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -27,7 +28,7 @@ func ExampleEnv_ExecuteSafe() {
 	env := stick.New(nil)
 
 	params := map[string]stick.Value{"name": "World"}
-	err := env.ExecuteSafe(`Hello, {{ 'world' | fakefilter }}!`, os.Stdout, params)
+	err := env.ExecuteSafe(context.Background(), `Hello, {{ 'world' | fakefilter }}!`, os.Stdout, params)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -122,7 +123,7 @@ func ExampleTest() {
 		return stick.CoerceBool(val) == false
 	}
 
-	err := env.Execute(
+	err := env.Execute(context.Background(),
 		`{{ (false is empty) ? 'empty' : 'not empty' }} - {{ ("a string" is empty) ? 'empty' : 'not empty' }}`,
 		os.Stdout,
 		nil,
@@ -148,7 +149,7 @@ func ExampleTest_twoWordsWithArgs() {
 		return int(v)%int(i) == 0
 	}
 
-	err := env.Execute(
+	err := env.Execute(context.Background(),
 		`{{ ('something' is divisible by(3)) ? "yep, 'something' evals to 0" : 'nope'  }} - {{ (9 is divisible by(3)) ? 'sure' : 'nope' }} - {{ (4 is divisible by(3)) ? 'sure' : 'nope' }}`,
 		os.Stdout,
 		nil,
@@ -172,7 +173,7 @@ func ExampleFunc() {
 		}{"A post", stick.CoerceNumber(args[0])}
 	}
 
-	err := env.Execute(
+	err := env.Execute(context.Background(),
 		`{% set post = get_post(123) %}{{ post.Title }} (# {{ post.ID }})`,
 		os.Stdout,
 		nil,
@@ -190,7 +191,7 @@ func ExampleFilter() {
 		return stick.NewSafeValue(val)
 	}
 
-	err := env.Execute(
+	err := env.Execute(context.Background(),
 		`{{ name|raw }}`,
 		os.Stdout,
 		map[string]stick.Value{"name": "<name>"},
@@ -212,7 +213,7 @@ func ExampleFilter_withParam() {
 		return strconv.FormatFloat(stick.CoerceNumber(val), 'f', int(d), 64)
 	}
 
-	err := env.Execute(
+	err := env.Execute(context.Background(),
 		`${{ price|number_format(2) }}`,
 		os.Stdout,
 		map[string]stick.Value{"price": 4.99},
@@ -262,7 +263,7 @@ func ExampleFunc_usingContext() {
 
 	// Notice that we discard the actual output. We only care about what the
 	// current_template function writes to buf.
-	err := env.Execute(
+	err := env.Execute(context.Background(),
 		`child.html.twig`,
 		ioutil.Discard,
 		nil,

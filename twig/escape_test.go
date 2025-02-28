@@ -2,6 +2,7 @@ package twig_test
 
 import (
 	"bytes"
+	"context"
 	"os"
 	"testing"
 
@@ -15,7 +16,7 @@ import (
 // application, which resolves to stick.EscapeFilter.
 func ExampleAutoEscapeExtension() {
 	env := twig.New(nil)
-	env.Execute("<html>{{ '<script>bad stuff</script>' }}", os.Stdout, map[string]stick.Value{})
+	env.Execute(context.Background(), "<html>{{ '<script>bad stuff</script>' }}", os.Stdout, map[string]stick.Value{})
 	// Output:
 	// <html>&lt;script&gt;bad stuff&lt;/script&gt;
 }
@@ -26,7 +27,7 @@ func ExampleAutoEscapeExtension() {
 // escaped.
 func ExampleAutoEscapeExtension_alreadySafe() {
 	env := twig.New(nil)
-	env.Execute("<html>{{ dangerous|escape }} {{ already_safe|escape }}", os.Stdout, map[string]stick.Value{
+	env.Execute(context.Background(), "<html>{{ dangerous|escape }} {{ already_safe|escape }}", os.Stdout, map[string]stick.Value{
 		"already_safe": stick.NewSafeValue("<script>good script</script>", "html"),
 		"dangerous":    "<script>bad script</script>",
 	})
@@ -82,7 +83,7 @@ func TestAutoEscapeExtension(t *testing.T) {
 		"utils.js.twig":   `console.log("{{ message }}");`,
 	}})
 	buf := bytes.Buffer{}
-	err := env.Execute("index.html.twig", &buf, map[string]stick.Value{
+	err := env.Execute(context.Background(), "index.html.twig", &buf, map[string]stick.Value{
 		"user":    "<a href='bad'>tyler-sommer</a>",
 		"message": "bad '\" message",
 	})

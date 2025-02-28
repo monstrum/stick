@@ -2,6 +2,7 @@ package stick
 
 import (
 	"bytes"
+	"context"
 	"fmt"
 	"io"
 	"strings"
@@ -402,7 +403,7 @@ func (v *testVisitor) Leave(n parse.Node) {
 
 func evaluateTest(t *testing.T, env *Env, test execTest) {
 	w := &bytes.Buffer{}
-	err := execute(test.tpl, w, test.ctx, env)
+	err := execute(context.Background(), test.tpl, w, test.ctx, env)
 
 	out := w.String()
 	if err := test.checkResult(out, err); err != nil {

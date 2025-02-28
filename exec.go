@@ -2,6 +2,7 @@ package stick
 
 import (
 	"bytes"
+	"context"
 	"errors"
 	"fmt"
 	"io"
@@ -31,10 +32,12 @@ type state struct {
 
 	env   *Env        // The configured Stick environment.
 	scope *scopeStack // Handles execution scope.
+
+	ctx context.Context
 }
 
 // newState creates a new template execution state, ready for use.
-func newState(name string, out io.Writer, ctx map[string]Value, env *Env) *state {
+func newState(ctx context.Context, name string, out io.Writer, values map[string]Value, env *Env) *state {
 	return &state{
 		out:  out,
 		node: nil,
@@ -48,7 +51,9 @@ func newState(name string, out io.Writer, ctx map[string]Value, env *Env) *state
 		localMacros: make(map[string]*parse.MacroNode),
 
 		env:   env,
-		scope: &scopeStack{[]map[string]Value{ctx}},
+		scope: &scopeStack{[]map[string]Value{values}},
+
+		ctx: ctx,
 	}
 }
 
@@ -76,6 +81,10 @@ func (s *state) Scope() ContextScope {
 
 func (s *state) Meta() ContextMetadata {
 	return s.meta
+}
+
+func (s *state) Context() context.Context {
+	return s.ctx
 }
 
 // noexport satisfies the Context interface.
@@ -290,7 +299,7 @@ func (s *state) walk(node parse.Node) error {
 		if err != nil {
 			return err
 		}
-		err = execute(tpl, s.out, ctx, s.env)
+		err = execute(s.ctx, tpl, s.out, ctx, s.env)
 		if err != nil {
 			return err
 		}
@@ -299,7 +308,7 @@ func (s *state) walk(node parse.Node) error {
 		if err != nil {
 			return err
 		}
-		si := newState(tpl, s.out, ctx, s.env)
+		si := newState(s.ctx, tpl, s.out, ctx, s.env)
 		tree, err := s.env.load(tpl)
 		if err != nil {
 			return err
@@ -911,11 +920,11 @@ func (s *state) callMacro(macro macroDef, args ...Value) (Value, error) {
 }
 
 // execute kicks off execution of the given template.
-func execute(name string, out io.Writer, ctx map[string]Value, env *Env) error {
-	if ctx == nil {
-		ctx = make(map[string]Value)
+func execute(ctx context.Context, name string, out io.Writer, values map[string]Value, env *Env) error {
+	if values == nil {
+		values = make(map[string]Value)
 	}
-	s := newState(name, out, ctx, env)
+	s := newState(ctx, name, out, values, env)
 	tree, err := s.env.load(name)
 	if err != nil {
 		return err
